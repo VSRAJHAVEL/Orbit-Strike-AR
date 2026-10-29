@@ -1,0 +1,27 @@
+{
+  "name": "skyfall-ar-rocket-command",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.14.0",
+    "gsap": "^3.12.5",
+    "howler": "^2.2.4",
+    "lucide": "^0.460.0",
+    "three": "^0.170.0",
+    "three-stdlib": "^2.35.0",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/howler": "^2.2.12",
+    "@types/three": "^0.170.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}
+

@@ -1,0 +1,302 @@
+[
+  {
+    "id": 1,
+    "chapter": 0,
+    "title": "INITIATION: FIRST CONTACT",
+    "briefing": "Rogue satellite debris detected entering low Earth trajectory. Deploy mobile launch pad, calibrate Viper-I elevation, and eliminate the target.",
+    "targetTier": "bullseye",
+    "distance": 32,
+    "wind": [0.5, 1.2],
+    "stars": [300, 500, 750]
+  },
+  {
+    "id": 2,
+    "chapter": 0,
+    "title": "MOJAVE CROSSWINDS",
+    "briefing": "Thermal desert updrafts are pushing westbound. Factor in +2.5 m/s wind deflection to strike the orbital core.",
+    "targetTier": "bullseye",
+    "distance": 45,
+    "wind": [2.0, 3.5],
+    "stars": [400, 600, 900]
+  },
+  {
+    "id": 3,
+    "chapter": 0,
+    "title": "SHIELDED OUTPOST",
+    "briefing": "Hostile reconnaissance beacon deployed an active energy forcefield. Fire a sustained salvo or high-explosive round to shatter the barrier.",
+    "targetTier": "shielded",
+    "distance": 38,
+    "wind": [1.5, 2.5],
+    "stars": [500, 750, 1100]
+  },
+  {
+    "id": 4,
+    "chapter": 0,
+    "title": "AERIAL SKYWATCHER",
+    "briefing": "Autonomous stealth drone executing sinusoidal patrol over the dune ridge. Lead your target along its flight vector.",
+    "targetTier": "drone",
+    "distance": 48,
+    "wind": [2.5, 4.0],
+    "stars": [600, 900, 1300]
+  },
+  {
+    "id": 5,
+    "chapter": 0,
+    "title": "LONG-RANGE CORRIDOR",
+    "briefing": "Target is anchored 65 meters out behind a ridge. Maximize launch force and set high 65-degree parabolic arc.",
+    "targetTier": "shielded",
+    "distance": 65,
+    "wind": [1.0, 2.5],
+    "stars": [700, 1000, 1500]
+  },
+  {
+    "id": 6,
+    "chapter": 0,
+    "title": "DESERT APEX: DREADNOUGHT",
+    "briefing": "COMMAND ALERT: Heavy orbital cruiser hovering at coordinates. Massive armor plating. Use Titan-Heavy to punch through its hull.",
+    "targetTier": "boss",
+    "distance": 55,
+    "wind": [2.0, 3.5],
+    "stars": [1000, 1500, 2200]
+  },
+  {
+    "id": 7,
+    "chapter": 1,
+    "title": "COASTAL INSERTION",
+    "briefing": "Relocated to Pacific bluffs. Strong onshore marine breeze detected. Calibrate yaw counter-steering.",
+    "targetTier": "bullseye",
+    "distance": 35,
+    "wind": [4.0, 6.0],
+    "stars": [400, 600, 900]
+  },
+  {
+    "id": 8,
+    "chapter": 1,
+    "title": "GALE FORCE RUN",
+    "briefing": "Pacific storm front incoming. Wind exceeding 8.0 m/s. Precision rocket or heavy mass required to prevent drift.",
+    "targetTier": "shielded",
+    "distance": 42,
+    "wind": [6.5, 9.0],
+    "stars": [500, 800, 1200]
+  },
+  {
+    "id": 9,
+    "chapter": 1,
+    "title": "HOVERING DRONE SWARM",
+    "briefing": "Fast maritime drone evading radar. Time your launch window during the crest of its hover wave.",
+    "targetTier": "drone",
+    "distance": 50,
+    "wind": [5.0, 7.5],
+    "stars": [600, 950, 1400]
+  },
+  {
+    "id": 10,
+    "chapter": 1,
+    "title": "CLIFFSIDE BUNKER",
+    "briefing": "Energy shield generator locked inside sea cove. Low angle required to skip under the sea mist ceiling.",
+    "targetTier": "shielded",
+    "distance": 58,
+    "wind": [5.5, 8.0],
+    "stars": [700, 1100, 1600]
+  },
+  {
+    "id": 11,
+    "chapter": 1,
+    "title": "OCEAN SKYWAY",
+    "briefing": "High altitude satellite repeater. Launch Mach-X with max velocity to reach apex before fuel burnout.",
+    "targetTier": "bullseye",
+    "distance": 70,
+    "wind": [6.0, 8.5],
+    "stars": [800, 1200, 1800]
+  },
+  {
+    "id": 12,
+    "chapter": 1,
+    "title": "LEVIATHAN FLAGSHIP",
+    "briefing": "CHAPTER 2 BOSS: Naval Dreadnought flagship deploying coastal jamming. Direct impact to the command bridge required.",
+    "targetTier": "boss",
+    "distance": 62,
+    "wind": [6.0, 9.0],
+    "stars": [1200, 1800, 2500]
+  },
+  {
+    "id": 13,
+    "chapter": 2,
+    "title": "SUB-ZERO PERMAFROST",
+    "briefing": "Station Svalbard defense grid. Freezing air density increases aerodynamic drag. Increase thrust to compensate.",
+    "targetTier": "bullseye",
+    "distance": 36,
+    "wind": [6.0, 9.0],
+    "stars": [450, 700, 1000]
+  },
+  {
+    "id": 14,
+    "chapter": 2,
+    "title": "BLIZZARD VOLLEY",
+    "briefing": "Blinding snowstorm. Trajectory visibility degraded. Rely on HUD flight telemetry and digital predictor line.",
+    "targetTier": "shielded",
+    "distance": 46,
+    "wind": [8.0, 12.0],
+    "stars": [550, 850, 1300]
+  },
+  {
+    "id": 15,
+    "chapter": 2,
+    "title": "ARCTIC FALCON",
+    "briefing": "High-speed surveillance drone scouting polar silos. Extreme lateral gusts. Fire Ion-Precision.",
+    "targetTier": "drone",
+    "distance": 54,
+    "wind": [9.0, 13.5],
+    "stars": [650, 1000, 1500]
+  },
+  {
+    "id": 16,
+    "chapter": 2,
+    "title": "GLACIER BASTION",
+    "briefing": "Reinforced cryo-shield anchored to glacial ice shelf. Double impact mandatory to breach reactor core.",
+    "targetTier": "shielded",
+    "distance": 60,
+    "wind": [8.5, 12.0],
+    "stars": [750, 1200, 1750]
+  },
+  {
+    "id": 17,
+    "chapter": 2,
+    "title": "POLAR HIGHWAY",
+    "briefing": "Satellite debris skipping across the upper stratosphere. High 72-degree pitch angle with maximum thrust.",
+    "targetTier": "bullseye",
+    "distance": 72,
+    "wind": [7.0, 11.0],
+    "stars": [850, 1350, 2000]
+  },
+  {
+    "id": 18,
+    "chapter": 2,
+    "title": "FROSTPEAK COLOSSUS",
+    "briefing": "CHAPTER 3 BOSS: Heavy Arctic Assault Fortress with rotating ice-defense shields. Obliterate its structural pylons.",
+    "targetTier": "boss",
+    "distance": 64,
+    "wind": [9.0, 14.0],
+    "stars": [1400, 2000, 2800]
+  },
+  {
+    "id": 19,
+    "chapter": 3,
+    "title": "NEO-METROPOLIS SKYLINE",
+    "briefing": "Urban orbital defense corridor. Navigate rocket trajectory between skyscraper air corridors.",
+    "targetTier": "bullseye",
+    "distance": 40,
+    "wind": [3.0, 5.0],
+    "stars": [500, 800, 1200]
+  },
+  {
+    "id": 20,
+    "chapter": 3,
+    "title": "NEON DOWNTOWN",
+    "briefing": "Hostile drone skimming rooftops. Calculate altitude to clear urban interference.",
+    "targetTier": "drone",
+    "distance": 48,
+    "wind": [4.0, 6.5],
+    "stars": [600, 950, 1450]
+  },
+  {
+    "id": 21,
+    "chapter": 3,
+    "title": "CORP-TOWER FORCEFIELD",
+    "briefing": "Corporate black-site bunker protected by dual harmonic shielding. Titan-Heavy recommended.",
+    "targetTier": "shielded",
+    "distance": 56,
+    "wind": [3.5, 6.0],
+    "stars": [700, 1100, 1700]
+  },
+  {
+    "id": 22,
+    "chapter": 3,
+    "title": "HIGH-OCTANE CHASE",
+    "briefing": "Fast courier drone descending through smog layer. Tight timing window.",
+    "targetTier": "drone",
+    "distance": 62,
+    "wind": [5.0, 7.5],
+    "stars": [800, 1250, 1900]
+  },
+  {
+    "id": 23,
+    "chapter": 3,
+    "title": "ORBITAL UPLINK NODE",
+    "briefing": "Long range satellite uplink dish. Clear the antenna cluster for a direct bullseye.",
+    "targetTier": "shielded",
+    "distance": 74,
+    "wind": [4.0, 6.5],
+    "stars": [900, 1400, 2100]
+  },
+  {
+    "id": 24,
+    "chapter": 3,
+    "title": "NEO-DREADNOUGHT TITAN",
+    "briefing": "CHAPTER 4 BOSS: Rogue military gunship hovering over the central city spire. Unleash maximum firepower.",
+    "targetTier": "boss",
+    "distance": 68,
+    "wind": [4.5, 7.0],
+    "stars": [1500, 2200, 3100]
+  },
+  {
+    "id": 25,
+    "chapter": 4,
+    "title": "LUNAR ALPHA INSERTION",
+    "briefing": "Welcome to Moon Base Alpha. Gravity is 1.62 m/s² (1/6th Earth). ZERO atmospheric drag. Trajectories travel 4x further!",
+    "targetTier": "bullseye",
+    "distance": 55,
+    "wind": [0.0, 0.0],
+    "stars": [600, 900, 1400]
+  },
+  {
+    "id": 26,
+    "chapter": 4,
+    "title": "CRATER PERIMETER",
+    "briefing": "Target positioned along the Shackleton crater rim. Use low force setting—moon gravity means minimal drop.",
+    "targetTier": "shielded",
+    "distance": 65,
+    "wind": [0.0, 0.0],
+    "stars": [700, 1100, 1650]
+  },
+  {
+    "id": 27,
+    "chapter": 4,
+    "title": "ORBITAL VACUUM DRONE",
+    "briefing": "Lunar reconnaissance drone utilizing reaction control thrusters. Pure Newtonian ballistics required.",
+    "targetTier": "drone",
+    "distance": 75,
+    "wind": [0.0, 0.0],
+    "stars": [800, 1300, 1950]
+  },
+  {
+    "id": 28,
+    "chapter": 4,
+    "title": "DEEP SPACE HORIZON",
+    "briefing": "Extreme distance target over 90 meters out across the lunar regolith plain. High angle precision trajectory.",
+    "targetTier": "shielded",
+    "distance": 90,
+    "wind": [0.0, 0.0],
+    "stars": [950, 1500, 2300]
+  },
+  {
+    "id": 29,
+    "chapter": 4,
+    "title": "LUNAR RELAY DEFENSE",
+    "briefing": "Hostile relay station shielding deep-space transmitter. Break shield then eliminate base.",
+    "targetTier": "drone",
+    "distance": 85,
+    "wind": [0.0, 0.0],
+    "stars": [1050, 1700, 2600]
+  },
+  {
+    "id": 30,
+    "chapter": 4,
+    "title": "FINAL ORBITAL CRISIS: APEX MOTHER SHIP",
+    "briefing": "GRAND CAMPAIGN FINALE: The mothership is descending to disrupt lunar orbital defense. Destroy all defensive barriers and detonate its reactor core!",
+    "targetTier": "boss",
+    "distance": 95,
+    "wind": [0.0, 0.0],
+    "stars": [2000, 3000, 4500]
+  }
+]
