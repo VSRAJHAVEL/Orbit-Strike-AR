@@ -24,7 +24,8 @@ export class Engine {
       0.1,
       1200
     );
-    this.camera.position.set(0, 5, 14);
+    this.camera.position.set(-3.8, 2.8, 6.2);
+    this.camera.lookAt(0, 2.2, -8.0);
 
     // 3. Renderer with PBR & Color Science
     this.renderer = new THREE.WebGLRenderer({

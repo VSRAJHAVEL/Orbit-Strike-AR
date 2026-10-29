@@ -161,3 +161,4 @@ export class SoundManager {
     return this.isMuted;
   }
 }
+

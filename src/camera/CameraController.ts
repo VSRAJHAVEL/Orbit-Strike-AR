@@ -18,7 +18,7 @@ export class CameraController {
     this.controls.maxPolarAngle = Math.PI / 2 - 0.02; // Prevent going underground
     this.controls.minDistance = 3.0;
     this.controls.maxDistance = 140.0;
-    this.controls.target.set(0, 1.5, 0);
+    this.controls.target.set(0, 2.2, -4.0);
 
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);

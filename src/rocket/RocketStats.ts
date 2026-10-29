@@ -76,3 +76,4 @@ export const ROCKET_ARCHETYPES: Record<string, RocketStats> = {
     description: 'Extended plasma burn thruster engineered for long-distance orbital parabolic trajectories.',
   },
 };
+

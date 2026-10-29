@@ -3,36 +3,69 @@ import { RocketStats } from '../rocket/RocketStats';
 
 export class TrajectorySimulator {
   public lineMesh: THREE.Line;
-  public impactMarker: THREE.Mesh;
+  public impactMarker: THREE.Group;
   private lineGeometry: THREE.BufferGeometry;
-  private maxPoints = 65;
+  private maxPoints = 80;
   private positions: Float32Array;
+  private beadingPoints: THREE.Points;
+  private beadingGeometry: THREE.BufferGeometry;
 
   constructor(scene: THREE.Scene) {
     this.positions = new Float32Array(this.maxPoints * 3);
     this.lineGeometry = new THREE.BufferGeometry();
     this.lineGeometry.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
 
+    // High-visibility glowing cyan trajectory line
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0x00f0ff,
-      linewidth: 3,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.9,
     });
     this.lineMesh = new THREE.Line(this.lineGeometry, lineMaterial);
     scene.add(this.lineMesh);
 
-    // Glowing impact point ring marker on the ground
-    const ringGeo = new THREE.RingGeometry(0.3, 0.45, 24);
-    ringGeo.rotateX(-Math.PI / 2);
-    const ringMat = new THREE.MeshBasicMaterial({
-      color: 0xffaa00,
-      side: THREE.DoubleSide,
+    // Dotted trajectory beads along the arc
+    this.beadingGeometry = new THREE.BufferGeometry();
+    this.beadingGeometry.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+    const beadingMaterial = new THREE.PointsMaterial({
+      color: 0x38bdf8,
+      size: 0.35,
       transparent: true,
       opacity: 0.85,
     });
-    this.impactMarker = new THREE.Mesh(ringGeo, ringMat);
+    this.beadingPoints = new THREE.Points(this.beadingGeometry, beadingMaterial);
+    scene.add(this.beadingPoints);
+
+    // Glowing impact point ring marker on the ground
+    this.impactMarker = new THREE.Group();
     scene.add(this.impactMarker);
+
+    // Outer ring
+    const ringGeo = new THREE.RingGeometry(1.2, 1.5, 32);
+    ringGeo.rotateX(-Math.PI / 2);
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0xf59e0b,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.9,
+    });
+    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+    this.impactMarker.add(ringMesh);
+
+    // Inner reticle crosshair
+    const cross1 = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.12, 3.2),
+      new THREE.MeshBasicMaterial({ color: 0x00f0ff, side: THREE.DoubleSide })
+    );
+    cross1.rotation.x = -Math.PI / 2;
+    this.impactMarker.add(cross1);
+
+    const cross2 = new THREE.Mesh(
+      new THREE.PlaneGeometry(3.2, 0.12),
+      new THREE.MeshBasicMaterial({ color: 0x00f0ff, side: THREE.DoubleSide })
+    );
+    cross2.rotation.x = -Math.PI / 2;
+    this.impactMarker.add(cross2);
   }
 
   public updateTrajectory(
@@ -43,12 +76,12 @@ export class TrajectorySimulator {
     gravityY: number,
     windVector: THREE.Vector3
   ): THREE.Vector3 {
-    const dt = 0.045; // Step time for trajectory forward integration
+    const dt = 0.045;
     const pos = origin.clone();
     const dir = direction.clone().normalize();
 
     // Initial muzzle push velocity along rail
-    const initialSpeed = forceMagnitude * 0.42 * stats.thrustMultiplier;
+    const initialSpeed = forceMagnitude * 0.45 * stats.thrustMultiplier;
     const vel = dir.clone().multiplyScalar(initialSpeed);
 
     const isVacuum = gravityY < 2.0;
@@ -65,10 +98,10 @@ export class TrajectorySimulator {
       this.positions[i * 3 + 2] = pos.z;
       pointCount++;
 
-      if (pos.y <= 0.22 && i > 2) {
+      if (pos.y <= 0.25 && i > 3) {
         hitGround = true;
         impactPos.copy(pos);
-        impactPos.y = 0.22;
+        impactPos.y = 0.25;
         break;
       }
 
@@ -99,7 +132,7 @@ export class TrajectorySimulator {
       pos.add(vel.clone().multiplyScalar(dt));
     }
 
-    // Fill remaining points with last position to maintain valid line
+    // Fill remaining points with last position
     for (let i = pointCount; i < this.maxPoints; i++) {
       this.positions[i * 3] = impactPos.x;
       this.positions[i * 3 + 1] = impactPos.y;
@@ -109,8 +142,12 @@ export class TrajectorySimulator {
     this.lineGeometry.setDrawRange(0, pointCount);
     (this.lineGeometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
 
+    this.beadingGeometry.setDrawRange(0, pointCount);
+    (this.beadingGeometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
+
     // Position impact ring marker
     this.impactMarker.position.copy(impactPos);
+    this.impactMarker.position.y += 0.05; // avoid z-fighting with ground
     this.impactMarker.visible = hitGround;
 
     return impactPos;
@@ -118,6 +155,7 @@ export class TrajectorySimulator {
 
   public setVisible(visible: boolean): void {
     this.lineMesh.visible = visible;
+    this.beadingPoints.visible = visible;
     this.impactMarker.visible = visible;
   }
 }

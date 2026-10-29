@@ -183,3 +183,4 @@ export class ARManager {
     return this.isARSupported;
   }
 }
+

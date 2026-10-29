@@ -140,6 +140,12 @@ export class TerrainGenerator {
     this.group.add(this.dustParticles);
   }
 
+  public getTerrainHeight(x: number, z: number): number {
+    const distFromCenter = Math.sqrt(x * x + z * z);
+    const centerFactor = Math.min(1.0, Math.max(0.0, (distFromCenter - 14) / 35));
+    return (Math.sin(x * 0.04 + z * 0.03) * 2.2 + Math.cos(x * 0.08 - z * 0.06) * 1.4) * centerFactor;
+  }
+
   public update(delta: number): void {
     // Animate drifting dust particles across terrain
     const pos = this.dustGeo.attributes.position as THREE.BufferAttribute;

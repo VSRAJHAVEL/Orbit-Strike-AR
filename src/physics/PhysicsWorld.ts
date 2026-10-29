@@ -111,7 +111,7 @@ export class PhysicsWorld {
     this.rocketBody = this.world.createRigidBody(bodyDesc);
 
     // Rocket capsule collider
-    const colDesc = RAPIER.ColliderDesc.capsule(0.45, 0.16)
+    const colDesc = RAPIER.ColliderDesc.capsule(1.2, 0.38)
       .setMass(stats.mass)
       .setRestitution(0.1)
       .setActiveEvents(RAPIER.ActiveEvents.COLLISION_EVENTS);
@@ -262,3 +262,4 @@ export class PhysicsWorld {
     return this.isInitialized;
   }
 }
+

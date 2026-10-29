@@ -12,48 +12,48 @@ import { TargetManager } from './targets/TargetManager';
 import { ARManager } from './ar/ARManager';
 import { CameraController } from './camera/CameraController';
 import { TacticalCommandHUD } from './ui/TacticalCommandHUD';
-import { gameStore, GamePhase } from './core/GameState';
+import { gameStore } from './core/GameState';
 import { ROCKET_ARCHETYPES, RocketStats } from './rocket/RocketStats';
 import { CHAPTERS } from './world/ChapterConfig';
 import missionsData from './data/missions.json';
 
 async function bootstrap(): Promise<void> {
-  // 1. Initialize Core Engine & Renderer
+  // 1. Core Three.js Engine & Renderer
   const engine = new Engine('canvas-container');
 
-  // 2. Initialize Physics World (Rapier 3D)
+  // 2. Rapier 3D Physics World
   const physics = new PhysicsWorld();
   await physics.init(CHAPTERS[0].gravity);
 
-  // 3. Initialize Audio Synthesizer & Sound Bank
+  // 3. Procedural Audio Synthesizer
   const sound = new SoundManager();
 
-  // 4. Initialize Environmental Systems & Sky
+  // 4. Atmospheric Sky & Lighting
   const envManager = new EnvironmentManager(engine.scene);
 
-  // 5. Initialize PBR Landscape & Spaceport Apron
+  // 5. Procedural Dunes Landscape & Launch Apron
   const terrain = new TerrainGenerator(engine.scene, envManager.getCurrentConfig());
 
-  // 6. Initialize Launch Pad & Rocket Assembly
+  // 6. Launch Pad & Rocket Assembly
   const launchPad = new LaunchPad(engine.scene);
-  launchPad.setPosition(new THREE.Vector3(0, 0.2, 0));
+  launchPad.setPosition(new THREE.Vector3(0, 0.45, 0));
 
   let currentStats: RocketStats = ROCKET_ARCHETYPES.viper_basic;
   const rocket = new RocketModel(currentStats);
   launchPad.getMountPoint().add(rocket.mesh);
 
-  // 7. Initialize Trajectory Predictor & Particle Engine
+  // 7. Live Predictive Trajectory Line & GPU Particle System
   const trajectory = new TrajectorySimulator(engine.scene);
   const particles = new ParticleSystem(engine.scene);
 
-  // 8. Initialize Multi-Tier Targets
+  // 8. Multi-Tier Target System
   const targetManager = new TargetManager(engine.scene, physics);
 
-  // 9. Initialize Camera & AR Passthrough Manager
+  // 9. Camera Controller (Orbit + WASD)
   const cameraController = new CameraController(engine.camera, engine.renderer.domElement);
   const arManager = new ARManager(engine.renderer, engine.scene);
 
-  // Flight & State Tracking
+  // Flight State
   let isFlightActive = false;
   let isCountingDown = false;
   let currentWind = new THREE.Vector3(1.5, 0, 0.5);
@@ -75,10 +75,12 @@ async function bootstrap(): Promise<void> {
     currentWind.set(windSpeed * 0.8, 0, (Math.random() - 0.5) * windSpeed * 0.4);
     physics.setWind(currentWind);
 
-    // Spawn Mission Target
+    // Spawn Mission Target placed firmly on top of terrain
     const targetZ = -mission.distance;
-    const targetX = (Math.random() - 0.5) * (mission.distance * 0.22);
-    const targetY = mission.targetTier === 'drone' ? 8.5 : mission.targetTier === 'boss' ? 4.5 : 0.22;
+    const targetX = (Math.random() - 0.5) * (mission.distance * 0.18);
+    const groundElevation = terrain.getTerrainHeight(targetX, targetZ);
+    const targetY = (mission.targetTier === 'drone' ? 8.5 : mission.targetTier === 'boss' ? 5.2 : 0.2) + groundElevation;
+
     targetManager.spawnTarget(mission.targetTier as any, new THREE.Vector3(targetX, targetY, targetZ));
 
     // Reset Rocket to Launch Pad
@@ -104,10 +106,12 @@ async function bootstrap(): Promise<void> {
 
     trajectory.setVisible(true);
     cameraController.controls.enabled = true;
-    cameraController.controls.target.set(0, 1.5, 0);
+    cameraController.controls.target.set(0, 2.2, -4.0);
+    engine.camera.position.set(-3.8, 2.8, 6.2);
+    engine.camera.lookAt(0, 2.2, -4.0);
   };
 
-  // Helper to recalculate predictive trajectory arc
+  // Recalculate predictive trajectory arc
   const updateLiveTrajectory = () => {
     if (isFlightActive) return;
 
@@ -120,14 +124,14 @@ async function bootstrap(): Promise<void> {
     trajectory.updateTrajectory(
       position,
       direction,
-      state.forcePercent * 0.22,
+      state.forcePercent * 0.24,
       currentStats,
       chapterConfig.gravity,
       currentWind
     );
   };
 
-  // Trigger Launch Sequence with 3-2-1 Countdown
+  // Trigger Launch Sequence
   const triggerLaunch = () => {
     if (isFlightActive || isCountingDown) return;
 
@@ -149,7 +153,7 @@ async function bootstrap(): Promise<void> {
         sound.playCountdown(0);
         executeIgnition();
       }
-    }, 650);
+    }, 600);
   };
 
   const executeIgnition = () => {
@@ -165,13 +169,13 @@ async function bootstrap(): Promise<void> {
     rocket.mesh.position.copy(position);
 
     // Spawn Rapier physics dynamic body
-    const forceMag = state.forcePercent * 0.22;
+    const forceMag = state.forcePercent * 0.24;
     physics.spawnRocket(position, direction, forceMag, currentStats);
 
     // Audio & Visual Effects
     sound.startEngineRumble();
     rocket.setEngineBurning(true);
-    particles.emitExhaust(position, direction, currentStats.glowColor, 40);
+    particles.emitExhaust(position, direction, currentStats.glowColor, 50);
   };
 
   // 10. Connect HUD Callbacks
@@ -215,6 +219,52 @@ async function bootstrap(): Promise<void> {
     },
   });
 
+  // Touch & Mouse Drag-to-Aim on Viewport
+  let isDraggingAim = false;
+  let lastPointerX = 0;
+  let lastPointerY = 0;
+
+  window.addEventListener('pointerdown', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('.glass-panel') || target.closest('button') || target.closest('input')) return;
+    if (e.button === 0 && !isFlightActive) {
+      isDraggingAim = true;
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+    }
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!isDraggingAim || isFlightActive) return;
+
+    const deltaX = e.clientX - lastPointerX;
+    const deltaY = e.clientY - lastPointerY;
+    lastPointerX = e.clientX;
+    lastPointerY = e.clientY;
+
+    const state = gameStore.getState();
+    const newYaw = Math.max(-55, Math.min(55, state.yawAngleDeg + deltaX * 0.2));
+    const newPitch = Math.max(15, Math.min(85, state.pitchAngleDeg - deltaY * 0.2));
+
+    gameStore.getState().setAim(newPitch, newYaw, state.forcePercent);
+    updateLiveTrajectory();
+
+    // Sync sliders
+    const pitchSlider = document.querySelector<HTMLInputElement>('#slider-pitch');
+    const yawSlider = document.querySelector<HTMLInputElement>('#slider-yaw');
+    const pitchLabel = document.querySelector('#label-pitch');
+    const yawLabel = document.querySelector('#label-yaw');
+
+    if (pitchSlider) pitchSlider.value = `${Math.round(newPitch)}`;
+    if (yawSlider) yawSlider.value = `${Math.round(newYaw)}`;
+    if (pitchLabel) pitchLabel.textContent = `${Math.round(newPitch)}°`;
+    if (yawLabel) yawLabel.textContent = `${Math.round(newYaw)}°`;
+  });
+
+  window.addEventListener('pointerup', () => {
+    isDraggingAim = false;
+  });
+
   // Load Mission 1 initially
   loadMission(0);
 
@@ -241,8 +291,8 @@ async function bootstrap(): Promise<void> {
         // Rocket exhaust plume while motor burns
         if (flightState.isBurning) {
           const forward = new THREE.Vector3(0, 1, 0).applyQuaternion(flightState.quaternion);
-          const exhaustOrigin = flightState.position.clone().addScaledVector(forward, -0.2);
-          particles.emitExhaust(exhaustOrigin, forward, currentStats.glowColor, 8);
+          const exhaustOrigin = flightState.position.clone().addScaledVector(forward, -0.4);
+          particles.emitExhaust(exhaustOrigin, forward, currentStats.glowColor, 10);
           rocket.setEngineBurning(true, flightState.fuelRemainingPct);
         } else {
           rocket.setEngineBurning(false);
@@ -252,10 +302,10 @@ async function bootstrap(): Promise<void> {
         // Camera Follow Mode: smooth camera chase behind rocket
         const rocketPos = flightState.position;
         const forward = flightState.velocity.clone().normalize();
-        const desiredCamPos = rocketPos.clone().addScaledVector(forward, -6.0).add(new THREE.Vector3(0, 2.5, 0));
+        const desiredCamPos = rocketPos.clone().addScaledVector(forward, -8.0).add(new THREE.Vector3(0, 3.2, 0));
 
         engine.camera.position.lerp(desiredCamPos, Math.min(1.0, delta * 5.0));
-        engine.camera.lookAt(rocketPos.clone().addScaledVector(forward, 4.0));
+        engine.camera.lookAt(rocketPos.clone().addScaledVector(forward, 5.0));
         cameraController.controls.enabled = false;
 
         // Check for collision event
@@ -309,7 +359,7 @@ async function bootstrap(): Promise<void> {
   // Start Engine Loop
   engine.start();
 
-  console.log('[SKYFALL] All 8 Milestones successfully wired and operational.');
+  console.log('[SKYFALL] Engine, Controls, Physics & Heroic Visuals active.');
 }
 
 window.addEventListener('DOMContentLoaded', () => {

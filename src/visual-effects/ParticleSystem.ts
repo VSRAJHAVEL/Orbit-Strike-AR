@@ -224,3 +224,4 @@ export class ParticleSystem {
     (this.geo.attributes.position as THREE.BufferAttribute).needsUpdate = true;
   }
 }
+
