@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db7d7aa9f55aeb4fb4c49c082928bdd, type: 3}
+  m_Name: Level_11
+  m_EditorClassIdentifier: OrbitStrike::OrbitStrike.Data.LevelData
+  levelNumber: 11
+  levelTitle: Frostpeak Pass 5
+  worldConfig: {fileID: 0}
+  targetTier: 3
+  targetLocalPosition: {x: 0.8, y: 0.2, z: 6.5}
+  hasObstacle: 1
+  obstacleLocalPosition: {x: 0, y: 0, z: 2.8}
+  obstacleScale: {x: 1.5, y: 1, z: 0.4}
+  windDirection: {x: 1, y: 0, z: 0}
+  windSpeed: 6.5
+  customGravity: -9.81
+  parRocketsFor3Stars: 1
+  parRocketsFor2Stars: 2

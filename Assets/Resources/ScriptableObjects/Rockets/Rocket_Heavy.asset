@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edad040a70f34ab49b4c5908c928d427, type: 3}
+  m_Name: Rocket_Heavy
+  m_EditorClassIdentifier: OrbitStrike::OrbitStrike.Data.RocketData
+  rocketType: 1
+  rocketName: Titan-IV
+  description: Armored siege rocket with huge blast radius.
+  themeColor: {r: 1, g: 0.45, b: 0, a: 1}
+  unlockCost: 300
+  isUnlockedByDefault: 0
+  dryMass: 2.5
+  propellantMass: 3.5
+  peakThrust: 85
+  burnDuration: 3.2
+  initialBoosterSpike: 1.35
+  thrustCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.75
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dragCoefficient: 0.45
+  crossSectionalArea: 0.035
+  finStabilityTorque: 18
+  maxGimbalAngle: 8
+  blastRadius: 2.5
+  directHitDamage: 250
+  explosionImpulse: 400
+  hasArmorPiercing: 0
+  hasEMPDisruption: 0
