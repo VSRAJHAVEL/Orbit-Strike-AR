@@ -17,7 +17,9 @@ namespace OrbitStrike.Core
             {
                 (GameState.None, GameState.Menu) => true,
                 (GameState.None, GameState.SurfaceScan) => true,
+                (GameState.None, GameState.Aiming) => true,
                 (GameState.Menu, GameState.SurfaceScan) => true,
+                (GameState.Menu, GameState.Aiming) => true,
                 (GameState.Menu, GameState.Shop) => true,
                 (GameState.Menu, GameState.Settings) => true,
                 (GameState.Shop, GameState.Menu) => true,

@@ -26,6 +26,8 @@ namespace OrbitStrike.Core
 
         public static void BootstrapCoreSystems()
         {
+            if (FindAny<OrbitStrikeAR.OrbitStrikeLegendaryEngine>() != null) return;
+
             // 1. Core Systems & Persistence
             EnsureManager<GameManager>("GameManager");
             EnsureManager<SaveManager>("SaveManager");

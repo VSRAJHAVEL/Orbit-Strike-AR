@@ -45,6 +45,7 @@ namespace OrbitStrike.Editor
 
             // 2. Core Managers & Bootstrapper
             GameObject coreGo = new GameObject("[CORE_SYSTEMS]");
+            coreGo.AddComponent<OrbitStrikeAR.OrbitStrikeLegendaryEngine>();
             coreGo.AddComponent<OrbitStrikeSceneBootstrapper>();
             coreGo.AddComponent<GameManager>();
             coreGo.AddComponent<SaveManager>();
